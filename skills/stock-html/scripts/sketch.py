@@ -592,7 +592,7 @@ def roadmap(stages, name="roadmap"):
     n = len(stages)
     rise, gap = 26, 12
     w = (708 - (n - 1) * gap) / n
-    H = 24 + (n - 1) * rise + 122
+    H = 24 + (n - 1) * rise + 138   # 最低一级也要放得下 3 个要点（原 122 时第 3 行贴框底）
     c = Canvas(760, H, name)
     for i, (when, title, items) in enumerate(stages):
         x, top = 26 + i * (w + gap), 14 + (n - 1 - i) * rise

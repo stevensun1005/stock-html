@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- `scripts/sketch.py`: `roadmap()` is 16px taller, so the lowest step fits three bullet points without the last one touching the box edge.
+
 ## 1.0.1
 
 - `scripts/verify.py`: fixed two Windows issues — Chrome's UTF-8 output no longer crashes on systems whose default code page is GBK, and `--shots` now works with relative paths (screenshots were silently not saved).
