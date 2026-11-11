@@ -1,0 +1,19 @@
+{
+  "name": "stock-html",
+  "owner": {
+    "name": "stevensun1005",
+    "url": "https://github.com/stevensun1005"
+  },
+  "metadata": {
+    "description": "stock-html — hand-drawn illustrated explainers for stocks, earnings and anything you want to understand in one pass."
+  },
+  "plugins": [
+    {
+      "name": "stock-html",
+      "source": "./",
+      "description": "Turn a stock, an earnings report, a merger headline — or any dense reading — into a hand-drawn, one-page illustrated explainer (single-file HTML, light + dark).",
+      "category": "productivity",
+      "homepage": "https://github.com/stevensun1005/stock-html"
+    }
+  ]
+}
