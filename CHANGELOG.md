@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- `scripts/verify.py`: fixed two Windows issues — Chrome's UTF-8 output no longer crashes on systems whose default code page is GBK, and `--shots` now works with relative paths (screenshots were silently not saved).
+
 ## 1.0.0
 
 First public release.

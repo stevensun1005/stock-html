@@ -50,10 +50,14 @@ def find_browser():
 def run(browser, profile, url, extra, timeout=90):
     cmd = [browser, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run", "--no-default-browser-check",
            "--disable-extensions", "--user-data-dir=" + profile, "--virtual-time-budget=8000"] + extra + [url]
-    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    # 显式 UTF-8：Windows 中文系统默认按 GBK 解码，Chrome 输出的 UTF-8 DOM 会让读取线程崩掉
+    return subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
 
 
 def main():
+    for stream in (sys.stdout, sys.stderr):  # 控制台编码不是 UTF-8 时也别因为打印中文而崩
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("page")
     ap.add_argument("--shots", help="截图输出目录")
@@ -76,9 +80,9 @@ def main():
     profile = tempfile.mkdtemp(prefix="stock-html-")
     try:
         r = run(browser, profile, page.as_uri() + "?check=1", ["--window-size=%d,1200" % a.width, "--dump-dom"])
-        m = re.search(r'<pre id="stock-html-check"[^>]*>(.*?)</pre>', r.stdout, re.S)
+        m = re.search(r'<pre id="stock-html-check"[^>]*>(.*?)</pre>', r.stdout or "", re.S)
         if not m:
-            print("页面里没读到自检结果（是不是没用 assets/template.html 的脚本？）\n" + r.stderr[-600:])
+            print("页面里没读到自检结果（是不是没用 assets/template.html 的脚本？）\n" + (r.stderr or "")[-600:])
             sys.exit(1)
         import html as _html
         res = json.loads(_html.unescape(m.group(1)))
@@ -94,7 +98,7 @@ def main():
         print("svg: %d   page height: %dpx" % (res["svgs"], res["height"]))
 
         if a.shots:
-            out = Path(a.shots)
+            out = Path(a.shots).resolve()  # Chrome 的 --screenshot 不认相对路径（工作目录不同）
             out.mkdir(parents=True, exist_ok=True)
             sl = a.slice or 1300
             n = math.ceil((res["height"] + 40) / sl)
