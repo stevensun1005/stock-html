@@ -15,6 +15,7 @@ description: "把一只股票、一份财报、一条并购/重大新闻，或�
 | 文件 | 干什么 |
 |---|---|
 | `scripts/sketch.py` | 画布、两格漫画、现成图表、整页拼装；`save()` 时自动做离线版面检查 |
+| `scripts/blocks.py` | 半成品积木：主线图、护城河、远期对账图、三种两格漫画版式、股价推演表——一次做多份报告时用 |
 | `scripts/verify.py` | 用无头 Chrome 真实渲染，读页面内置自检结果，分段截图 |
 | `assets/template.html` | 页面模板：两套主题、抖动滤镜、印章进度、内置自检脚本 |
 | `examples/boba_merger.py` | **完整参考写法**（虚构公司的个股报告），开工前先读一遍 |
@@ -122,6 +123,22 @@ p.sources([(标题, url), ...]);  p.save("out.html")
 ```
 
 英文页面：在创建任何 `Comic` / `Page` 之前调用 `set_lang("en")`。每个函数的参数细节直接看 `scripts/sketch.py` 里的 docstring。
+
+**一次做多份报告**（比如一个 ETF 的前十大成分股）时，用 `scripts/blocks.py` 的积木，每份报告只需写数字和文案：
+
+```python
+from blocks import *          # 同时导入 sketch 的全部工具
+m  = mainline_tug(左标题, [(标签, 值, 是否指引)×3], 单位注, 问题, 副问题, [(力量, 颜色)×3], 右标题, [(日期, 股价), ...], "−6%")
+mo = moat(["① 最深", "② 次之", "③ 最浅"], "TICK")
+vi = vision([(值, 标签1, 标签2, 颜色, 虚线)×3], gap_between=(1, 2), note="算法…")
+c1 = C_bars(左说明, 右说明, [(标签, 值, 颜色)], [(标签, 值, 颜色)], lnote=, rnote=, fmt="%g")   # 前后对比柱
+c2 = C_talk(左说明, 右说明, "A", "气泡里的话", "烦恼物件", "D", "办法物件", "一行注")          # 角色 + 物件
+c3 = C_flow(左说明, 右说明, ["框", "框"], ["框", "框", "框"], rnote="一行注")                 # 流程框
+sc = [scen("路径", 概率, 示意EPS, 低倍数, 高倍数, "green"), ...];  expect(sc);  scen_table(sc, 需要发生什么)
+p = Page(..., notice=disclaimer("2026-11-11"))
+```
+
+积木画出来的图偏“标准件”；单份报告想画得更讲究，仍用 `Canvas` / `Comic` 手画，两者可以混用。
 
 现成图表不够用时，直接用 `Canvas` 的基础图形自己画——工具箱是起点不是笼子；只要文字都走 `c.text()`，检查照样生效。
 

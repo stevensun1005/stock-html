@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- New `scripts/blocks.py`: ready-made building blocks on top of `sketch.py` — `mainline_tug` (business vs. share price), `moat`, `vision` (three bars with a red gap), three two-panel comic layouts (`C_bars`, `C_talk`, `C_flow`), scenario helpers (`scen`, `expect`, `scen_table`) and `disclaimer()`. Built for producing many reports in one go (e.g. an ETF's top ten holdings); all text still goes through `Canvas.text()`, so both layout checks still apply.
+- Layout fixes baked into the blocks: the vision chart reserves room for its footnote, bar-comic value labels no longer collide with the panel note, and the mainline price line keeps its first label off the line.
+
 ## 1.0.2
 
 - `scripts/sketch.py`: `roadmap()` is 16px taller, so the lowest step fits three bullet points without the last one touching the box edge.

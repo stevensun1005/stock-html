@@ -200,6 +200,7 @@ stock-html/
 ├── skills/stock-html/          ← the skill itself (this folder is all you need)
 │   ├── SKILL.md                    workflow, report structure, hard rules
 │   ├── scripts/sketch.py           toolkit: canvas, comics, charts, page builder, pre-check
+│   ├── scripts/blocks.py           ready-made blocks: mainline, moat, vision chart, 3 comic layouts (for batches)
 │   ├── scripts/verify.py           headless-Chrome check + sliced screenshots
 │   ├── assets/template.html        page template: themes, wobble filter, stamps, self-check
 │   ├── examples/boba_merger.py     full worked example (builds the live demo)

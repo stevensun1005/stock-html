@@ -204,6 +204,7 @@ stock-html/
 ├── skills/stock-html/          ← skill 本体(装这个目录就够了)
 │   ├── SKILL.md                    工作流程、报告结构、硬性要求
 │   ├── scripts/sketch.py           手绘图解工具箱:画布、漫画、图表、页面、离线预检
+│   ├── scripts/blocks.py           半成品积木:主线图、护城河、远期对账、三种漫画版式(批量做报告用)
 │   ├── scripts/verify.py           无头 Chrome 自检 + 分段截图
 │   ├── assets/template.html        页面模板:双主题、抖动滤镜、印章、内置自检
 │   ├── examples/boba_merger.py     完整示例(本仓库在线示例的生成脚本)
