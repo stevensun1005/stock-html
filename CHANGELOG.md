@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.2
+
+- `blocks.mainline_tug()`: the last bar's value label moves off the arrow to the centre box when the bar top lands at the arrow's height.
+
 ## 1.4.1
 
 - `sketch.py`: stdout/stderr no longer crash on non-UTF-8 consoles (e.g. Windows GBK) when a lint message contains characters such as `¥`.

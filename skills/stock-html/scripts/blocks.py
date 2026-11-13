@@ -32,7 +32,10 @@ def mainline_tug(left_title, bars, unit_note, center_q, center_sub, forces, righ
     for i, (lab, val, guide) in enumerate(bars):
         x = 50 + i * 72
         m.bar(x, 186 - val * k, 48, val * k, "orange" if guide else "green", dash=guide)
-        m.text(x + 24, 180 - val * k, "%g" % val, size=12.5, bold=True)
+        ly = 180 - val * k
+        if i == len(bars) - 1 and 106 <= ly <= 136:  # 最后一根柱的数字会压在右侧箭头（y=120）上：挪开
+            ly = (186 - val * k + 18) if val * k >= 30 else 104
+        m.text(x + 24, ly, "%g" % val, size=12.5, bold=True)
         m.text(x + 24, 206, lab, size=_fit(lab, 12.5, 68), color="ink2")
     m.text(150, 232, unit_note, size=13, color="ink2")
     m.rect(296, 86, 168, 64, "ink", "hl").text(380, 113, center_q, size=_fit(center_q, 15, 156, True), bold=True)
