@@ -22,6 +22,13 @@ import re
 import sys
 from pathlib import Path
 
+for _s in (sys.stdout, sys.stderr):  # 控制台不是 UTF-8（如 Windows GBK）时，打印 ¥ 等字符也别崩
+    if hasattr(_s, "reconfigure"):
+        try:
+            _s.reconfigure(errors="replace")
+        except (ValueError, OSError):
+            pass
+
 __all__ = ["Canvas", "Comic", "Page", "Stop", "snake", "metro", "paths_chart", "ruler_chart",
            "waterfall", "timeline", "roadmap", "risk_matrix", "set_lang", "text_w", "LABELS"]
 

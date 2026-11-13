@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- `sketch.py`: stdout/stderr no longer crash on non-UTF-8 consoles (e.g. Windows GBK) when a lint message contains characters such as `¥`.
+
 ## 1.4.0
 
 - `blocks.mainline_tug(..., cur=)` and `blocks.scen_table(..., cur=)`: currency symbol for price labels (default `"$"`; `"¥"` for A-shares, `"HK$"` for Hong Kong).
