@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- `blocks.org_change()`: before/after diagram for leadership or structure changes, with the departed role drawn as a red dashed box.
+- `waterfall()`: long step labels split onto two lines when there are many steps, so neighbouring labels no longer run together.
+- `references/stock-report.md`: new section "重大事件后的更新" — how to update an existing report after a major event (sources, notice, an event section with a before/after table and market reaction, and which default sections must change).
+
 ## 1.1.0
 
 - New `scripts/blocks.py`: ready-made building blocks on top of `sketch.py` — `mainline_tug` (business vs. share price), `moat`, `vision` (three bars with a red gap), three two-panel comic layouts (`C_bars`, `C_talk`, `C_flow`), scenario helpers (`scen`, `expect`, `scen_table`) and `disclaimer()`. Built for producing many reports in one go (e.g. an ETF's top ten holdings); all text still goes through `Canvas.text()`, so both layout checks still apply.

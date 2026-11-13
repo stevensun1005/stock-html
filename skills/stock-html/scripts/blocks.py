@@ -163,6 +163,34 @@ def scen_table(sc, needs):
 
 
 
+# ---------------------------------------------------------------- 重大事件：前后对比（人事、组织、股权结构）
+def org_change(before, after, left_title="之前", right_title="之后", gone=None, note=None, name="org-change"):
+    """左右两列方框对比一次结构变化，常用于 CEO / 董事会调整。
+
+    before / after = [(角色, 说明, 颜色), ...]，每列 2–4 个；颜色用语义名（新来的用 "orange"）。
+    gone = 左列里“离开”的那一项的序号：画红色虚线框 + 叉，表示作废 / 离任。
+    """
+    n = max(len(before), len(after))
+    bh, gap = 52, 14
+    h = 70 + n * (bh + gap) + (24 if note else 0)
+    c = Canvas(760, h, name)
+    c.text(190, 30, left_title, size=16, bold=True).text(570, 30, right_title, size=16, bold=True)
+    for col_x, items, is_left in ((60, before, True), (440, after, False)):
+        for i, (role, desc, color) in enumerate(items):
+            y = 50 + i * (bh + gap)
+            out = is_left and gone == i
+            c.rect(col_x, y, 260, bh, "red" if out else "ink", "red" if out else color, dash=out, r=8)
+            c.text(col_x + 14, y + 22, role, size=_fit(role, 14, 232, True), anchor="start", bold=True)
+            c.text(col_x + 14, y + 42, desc, size=_fit(desc, 12.5, 232), anchor="start", color="ink2")
+            if out:
+                c.cross(col_x + 238, y + bh / 2, 9)
+    mid_y = 50 + (n * (bh + gap) - gap) / 2
+    c.arrow(334, mid_y, 426, mid_y, "orange", cls="bold")
+    if note:
+        c.text(744, h - 8, note, size=12, anchor="end", color="ink2")
+    return c
+
+
 def disclaimer(as_of, extra=""):
     """页面顶部提示条的标准写法：数据截止日 + 免责声明。"""
     return "数据截至 %s 收盘；盘后价格会变动。仅作学习用途，不构成投资建议。%s" % (as_of, (" " + extra) if extra else "")

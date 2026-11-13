@@ -549,7 +549,12 @@ def waterfall(steps, unit="%", name="waterfall", h=280, total_label=None, total_
         y1, y2 = sorted((Y(a), Y(b)))
         c.rect(x, y1, bw, max(y2 - y1, 2), col, col, dash=(col == "red"), r=4)
         c.text(x + bw / 2, (y2 + 17) if d < 0 else (y1 - 7), fmt(d), size=14, bold=True, color=col)
-        c.text(x + bw / 2, B + 24, lb, size=_fit(lb, 13.5, cw - 10))
+        if text_w(lb, 12) > cw - 8 and " " in lb:     # 柱子多、标签长时拆成两行，避免相邻标签挤在一起
+            l1, l2 = lb.split(" ", 1)
+            c.text(x + bw / 2, B + 18, l1, size=_fit(l1, 12.5, cw - 8))
+            c.text(x + bw / 2, B + 35, l2, size=_fit(l2, 12.5, cw - 8))
+        else:
+            c.text(x + bw / 2, B + 24, lb, size=_fit(lb, 13.5, cw - 10))
         if not last:
             c.line(x + bw, Y(b), x + cw, Y(b), "ink2", dash=True, cls="thin")
     return c
