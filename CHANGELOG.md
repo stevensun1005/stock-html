@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+
+- `blocks.mainline_tug()`: the last price label moves below the point when the line ends on a downswing, so it no longer sits on the line.
+
 ## 1.3.0
 
 - `verify.py --pdf out.pdf`: export the page as an A4 PDF (light theme) through headless Chrome.

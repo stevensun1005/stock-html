@@ -48,7 +48,8 @@ def mainline_tug(left_title, bars, unit_note, center_q, center_sub, forces, righ
         m.circle(x, y, 3, "blue", "blue!")
     up0 = pts[1][1] < pts[0][1]          # 折线往上走时，把起点标签放到点下方，免得压线
     m.text(pts[0][0], pts[0][1] + (22 if up0 else -10), "$%g" % prices[0][1], size=12.5, bold=True)
-    m.text(pts[-1][0], pts[-1][1] - 10, "$%g" % prices[-1][1], size=12.5, bold=True, color="blue")
+    down1 = pts[-2][1] < pts[-1][1]      # 折线最后一段往下走时，把终点标签放到点下方
+    m.text(pts[-1][0], pts[-1][1] + (22 if down1 else -10), "$%g" % prices[-1][1], size=12.5, bold=True, color="blue")
     m.text(626, 180, "%s → %s" % (prices[0][0], prices[-1][0]), size=12.5, color="ink2")
     m.text(626, 204, price_note, size=15, bold=True, color="red" if price_note.startswith("−") else "green")
     m.text(744, 262, foot, size=12, anchor="end", color="ink2")
