@@ -44,7 +44,7 @@ description: "把一只股票、一份财报、一条并购/重大新闻，或�
    p.save("out.html")                     # 写文件 + 离线预检,有 ERROR 就改到没有
    ```
 6. **真实渲染检查**——`python3 scripts/verify.py out.html --shots shots/`。必须看到 `[CHECK light] PASS` 和 `[CHECK dark] PASS`，然后**逐张看截图**（浅色、深色至少各看两段）。细则见 `references/qa.md`。
-7. **交付**——环境里有 Artifact 发布工具就发布（发布后读控制台，确认两个主题都是 PASS）；没有就把 HTML 文件交给用户。
+7. **交付**——环境里有 Artifact 发布工具就发布（发布后读控制台，确认两个主题都是 PASS）；没有就把 HTML 文件交给用户。用户要 PDF 时：`python3 scripts/verify.py out.html --pdf out.pdf`（A4、浅色主题、图和卡片不跨页），导出后看一眼页数和分页。
 8. **回复用户**——先用 2–3 句直接回答他的问题（比如"基本面变了吗"），再用 5–8 个要点说明页面里有什么，注明和预期不同的地方（日期未确认、反推的数字、字体回退），最后列来源。
 
 ## 股票报告的默认结构

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+- `verify.py --pdf out.pdf`: export the page as an A4 PDF (light theme) through headless Chrome.
+- `assets/template.html`: print stylesheet — A4 margins, keeps colours, hides theme button and stamps, stops figures, cards, table rows and checklist items from splitting across pages, and keeps each section on one page when it fits.
+
 ## 1.2.0
 
 - `blocks.org_change()`: before/after diagram for leadership or structure changes, with the departed role drawn as a red dashed box.

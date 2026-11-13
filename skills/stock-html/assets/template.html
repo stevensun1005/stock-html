@@ -194,7 +194,19 @@ footer .made{margin-top:10px; font:14px var(--hand)}
   .card h3{font-size:21px}
   h2{font-size:24px}
 }
-@media print{ .theme-btn,#chkbar{display:none} body{background:#fff} .card,.frame,.stop{box-shadow:none} }
+@page{size:A4;margin:12mm 10mm}
+@media print{
+  .theme-btn,#chkbar,.stamp{display:none}
+  html,body{background:#fff !important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,.frame,.stop{box-shadow:none}
+  .cards .card{transform:none !important}
+  figure,.card,.stop,.tile,table,tr,.checkup li,.steps li{break-inside:avoid;page-break-inside:avoid}
+  h2,h3,h4,.sec>.prose,.sec>.lead{break-after:avoid;page-break-after:avoid}
+  .sec>figure,.sec>.frame{break-before:avoid;page-break-before:avoid}
+  .sec:not(.cards){break-inside:avoid;page-break-inside:avoid}   /* 一节能放进一页就整节放；放不下时浏览器照常分页 */
+  a{color:inherit;text-decoration:underline}
+}
 </style>
 </head>
 <body>

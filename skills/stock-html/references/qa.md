@@ -29,6 +29,7 @@ python3 scripts/verify.py out.html                     # 只跑自检
 python3 scripts/verify.py out.html --shots shots/      # 自检 + 按屏切片截图(浅色、深色各一套)
 python3 scripts/verify.py out.html --shots shots/ --at paths,risks,c3   # 只截指定小节（高度自动）
 python3 scripts/verify.py out.html --shots shots/ --full   # 另存整页长图
+python3 scripts/verify.py out.html --pdf out.pdf           # 另存 A4 PDF（浅色主题，图和卡片不跨页）
 ```
 
 它用无头 Chrome / Chromium / Edge 打开页面，读出模板里内置自检脚本的结果。内置脚本在字体加载完成后，对每张 `svg.chk` 用 `getBBox()` 量真实文字框，检查五类问题：

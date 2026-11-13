@@ -5,6 +5,7 @@
     python3 verify.py page.html --shots shots/  # 再把页面按屏切片截图（浅色 + 深色）
     python3 verify.py page.html --shots shots/ --full   # 另存整页长图
     python3 verify.py page.html --shots shots/ --at paths,risks,c3   # 只截某几节（按小节 id，高度自动）
+    python3 verify.py page.html --pdf page.pdf                       # 另存 A4 PDF（浅色主题，图不跨页）
 
 退出码：0 = PASS,1 = FAIL,2 = 找不到浏览器（改用下面的备用办法）。
 找不到 Chrome / Chromium / Edge 时：设环境变量 CHROME=/path/to/chrome,
@@ -66,6 +67,7 @@ def main():
     ap.add_argument("--slice", type=int, default=0, help="slice height in px (default 1300; with --at, the section's own height)")
     ap.add_argument("--scale", type=float, default=1.0, help="设备像素比；做 README 配图可用 2")
     ap.add_argument("--themes", default="light,dark")
+    ap.add_argument("--pdf", help="另存 PDF 的路径（A4，浅色主题；先跑自检，FAIL 也照样导出并提示）")
     ap.add_argument("--at", help="只截指定小节（逗号分隔的 id，如 mainline,c3,paths,risks），不切整页")
     a = ap.parse_args()
 
@@ -97,6 +99,12 @@ def main():
                     print("   %-8s %s" % (kind, it))
         print("svg: %d   page height: %dpx" % (res["svgs"], res["height"]))
 
+        if a.pdf:
+            pdf = Path(a.pdf).resolve()  # Chrome 不认相对路径
+            pdf.parent.mkdir(parents=True, exist_ok=True)
+            run(browser, profile, "%s?theme=light" % page.as_uri(),
+                ["--print-to-pdf=%s" % pdf, "--no-pdf-header-footer", "--run-all-compositor-stages-before-draw"], timeout=180)
+            print("PDF：%s（%s）" % (pdf, "%.0f KB" % (pdf.stat().st_size / 1024) if pdf.is_file() else "导出失败"))
         if a.shots:
             out = Path(a.shots).resolve()  # Chrome 的 --screenshot 不认相对路径（工作目录不同）
             out.mkdir(parents=True, exist_ok=True)
