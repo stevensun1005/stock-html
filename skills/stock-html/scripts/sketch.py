@@ -548,7 +548,13 @@ def waterfall(steps, unit="%", name="waterfall", h=280, total_label=None, total_
         x = L + i * cw + (cw - bw) / 2
         y1, y2 = sorted((Y(a), Y(b)))
         c.rect(x, y1, bw, max(y2 - y1, 2), col, col, dash=(col == "red"), r=4)
-        c.text(x + bw / 2, (y2 + 17) if d < 0 else (y1 - 7), fmt(d), size=14, bold=True, color=col)
+        ty, band = ((y2 + 17), (y2 + 3, y2 + 20)) if d < 0 else ((y1 - 7), (y1 - 21, y1 - 4))
+        if not last and band[0] <= Y(0) <= band[1]:   # 数字会压在 0 轴上：柱子够高就放进柱内，否则放到另一端
+            if y2 - y1 >= 26:
+                ty = (y2 - 7) if d < 0 else (y1 + 18)
+            else:
+                ty = (y1 - 7) if d < 0 else (y2 + 17)
+        c.text(x + bw / 2, ty, fmt(d), size=14, bold=True, color=col)
         if text_w(lb, 12) > cw - 8 and " " in lb:     # 柱子多、标签长时拆成两行，避免相邻标签挤在一起
             l1, l2 = lb.split(" ", 1)
             c.text(x + bw / 2, B + 18, l1, size=_fit(l1, 12.5, cw - 8))

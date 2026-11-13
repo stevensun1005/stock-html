@@ -21,8 +21,9 @@ from sketch import _fit  # noqa: E402
 
 # ---------------------------------------------------------------- 主线：生意 vs 股价
 def mainline_tug(left_title, bars, unit_note, center_q, center_sub, forces, right_title, prices, price_note,
-                 foot="收入为公司公布值；股价为收盘价", left_color="green"):
-    """左：3 根收入柱 (标签, 数值, 是否指引)；中：问题框 + 3 条力量；右：近期股价折线 [(标签, 价格), ...]。"""
+                 foot="收入为公司公布值；股价为收盘价", left_color="green", cur="$"):
+    """左：3 根收入柱 (标签, 数值, 是否指引)；中：问题框 + 3 条力量；右：近期股价折线 [(标签, 价格), ...]。
+    cur 是股价前的货币符号：美股 "$"，A 股 "¥"，港股 "HK$"。"""
     m = Canvas(760, 272, "mainline")
     m.text(150, 30, left_title, size=16, bold=True, color=left_color)
     m.text(620, 30, right_title, size=16, bold=True, color="blue")
@@ -47,9 +48,9 @@ def mainline_tug(left_title, bars, unit_note, center_q, center_sub, forces, righ
     for (x, y), (lab, p) in zip(pts, prices):
         m.circle(x, y, 3, "blue", "blue!")
     up0 = pts[1][1] < pts[0][1]          # 折线往上走时，把起点标签放到点下方，免得压线
-    m.text(pts[0][0], pts[0][1] + (22 if up0 else -10), "$%g" % prices[0][1], size=12.5, bold=True)
+    m.text(pts[0][0], pts[0][1] + (22 if up0 else -10), "%s%g" % (cur, prices[0][1]), size=12.5, bold=True)
     down1 = pts[-2][1] < pts[-1][1]      # 折线最后一段往下走时，把终点标签放到点下方
-    m.text(pts[-1][0], pts[-1][1] + (22 if down1 else -10), "$%g" % prices[-1][1], size=12.5, bold=True, color="blue")
+    m.text(pts[-1][0], pts[-1][1] + (22 if down1 else -10), "%s%g" % (cur, prices[-1][1]), size=12.5, bold=True, color="blue")
     m.text(626, 180, "%s → %s" % (prices[0][0], prices[-1][0]), size=12.5, color="ink2")
     m.text(626, 204, price_note, size=15, bold=True, color="red" if price_note.startswith("−") else "green")
     m.text(744, 262, foot, size=12, anchor="end", color="ink2")
@@ -157,9 +158,10 @@ def expect(sc):
     return sum(s["prob"] / 100 * (s["lo"] + s["hi"]) / 2 for s in sc)
 
 
-def scen_table(sc, needs):
+def scen_table(sc, needs, cur="$"):
+    """cur 是货币符号，A 股传 "¥"。"""
     return (["路径", "需要发生什么", "示意 EPS × 倍数", "价格区间", "概率"], [
-        [s["name"], need, "$%.2f × %g–%g 倍" % (s["eps"], s["lo_x"], s["hi_x"]), "$%.0f – %.0f" % (s["lo"], s["hi"]), "%d%%" % s["prob"]]
+        [s["name"], need, "%s%.2f × %g–%g 倍" % (cur, s["eps"], s["lo_x"], s["hi_x"]), "%s%.0f – %.0f" % (cur, s["lo"], s["hi"]), "%d%%" % s["prob"]]
         for s, need in zip(sc, needs)])
 
 

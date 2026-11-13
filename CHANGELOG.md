@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+- `blocks.mainline_tug(..., cur=)` and `blocks.scen_table(..., cur=)`: currency symbol for price labels (default `"$"`; `"¥"` for A-shares, `"HK$"` for Hong Kong).
+- `waterfall()`: when a step's value label would sit on the zero line, it moves inside the bar (tall bars) or to the bar's other end (short bars).
+- `references/stock-report.md`: new "A 股 / 港股" notes under 数据纪律 — cninfo PDFs as the primary source and how to extract their text with pypdfium2 when the fetch tool cannot, Chinese line-item names, currency/unit arguments, and price-limit context.
+
 ## 1.3.1
 
 - `blocks.mainline_tug()`: the last price label moves below the point when the line ends on a downswing, so it no longer sits on the line.
